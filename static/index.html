@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Event Management System</h1>
+        <nav>
+            <button id="showEventsBtn" class="nav-btn"><i class="fas fa-calendar-alt"></i> Events</button>
+            <button id="showCreateEventBtn" class="nav-btn"><i class="fas fa-plus-circle"></i> Create Event</button>
+        </nav>
+    </header>
+    <main>
+        <section id="eventList" class="hidden">
+            <h2>Upcoming Events</h2>
+            <div id="eventFilters">
+                <input type="text" id="searchInput" placeholder="Search events...">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+            <div id="events"></div>
+        </section>
+        <section id="createEvent" class="hidden">
+            <h2>Create New Event</h2>
+            <form id="createEventForm">
+                <input type="text" id="title" name="title" placeholder="Event Title" required>
+                <textarea id="description" name="description" placeholder="Event Description" required></textarea>
+                <input type="datetime-local" id="date" name="date" required>
+                <input type="text" id="location" name="location" placeholder="Event Location" required>
+                <input type="number" id="available_tickets" name="available_tickets" placeholder="Available Tickets" required>
+                <input type="text" id="image_url" name="image_url" placeholder="Image URL">
+                <input type="text" id="category" name="category" placeholder="Event Category">
+                <button type="submit">Create Event</button>
+            </form>
+        </section>
+        <section id="eventDetails" class="hidden">
+            <h2 id="eventTitle"></h2>
+            <img id="eventImage" src="" alt="Event Image">
+            <p id="eventDescription"></p>
+            <p id="eventDateTime"></p>
+            <p id="eventLocation"></p>
+            <p id="eventTickets"></p>
+            <p id="eventCategory"></p>
+            <form id="registrationForm">
+                <input type="text" id="attendeeName" placeholder="Your Name" required>
+                <input type="email" id="attendeeEmail" placeholder="Your Email" required>
+                <button type="submit">Register for Event</button>
+            </form>
+            <button id="backToEvents">Back to Events</button>
+        </section>
+    </main>
+    <div id="notification" class="hidden"></div>
+    <script src="script.js"></script>
+</body>
+</html>
