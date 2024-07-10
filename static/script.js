@@ -1,5 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000/api';
-
+const API_BASE_URL = 'http://localhost:5000/api';
 const eventList = document.getElementById('eventList');
 const createEvent = document.getElementById('createEvent');
 const eventDetails = document.getElementById('eventDetails');
@@ -12,7 +11,7 @@ const searchInput = document.getElementById('searchInput');
 const categoryFilter = document.getElementById('categoryFilter');
 const registrationForm = document.getElementById('registrationForm');
 const backToEventsBtn = document.getElementById('backToEvents');
-const loadingIndicator = document.getElementById('loading');
+
 
 let allEvents = [];
 
@@ -32,13 +31,6 @@ function showSection(section) {
     section.classList.remove('hidden');
 }
 
-function showLoading() {
-    loadingIndicator.classList.remove('hidden');
-}
-
-function hideLoading() {
-    loadingIndicator.classList.add('hidden');
-}
 
 showEventsBtn.addEventListener('click', () => {
     showSection(eventList);
@@ -57,10 +49,8 @@ createEventForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(createEventForm);
     const eventData = Object.fromEntries(formData.entries());
-    
     eventData.date = new Date(eventData.date).toISOString();
-    
-    showLoading();
+  
     fetch(`${API_BASE_URL}/events`, {
         method: 'POST',
         headers: {
@@ -84,12 +74,12 @@ createEventForm.addEventListener('submit', (e) => {
         showNotification('Error creating event: ' + error.message, true);
     })
     .finally(() => {
-        hideLoading();
+        
     });
 });
 
 function fetchEvents() {
-    showLoading();
+    
     eventsContainer.innerHTML = '<p>Loading events...</p>';
     fetch(`${API_BASE_URL}/events`)
         .then(response => {
@@ -112,7 +102,7 @@ function fetchEvents() {
             showNotification('Failed to load events. Please check your internet connection and try again.', true);
         })
         .finally(() => {
-            hideLoading();
+            
         });
 }
 
@@ -133,7 +123,6 @@ function createEventCard(event) {
     const card = document.createElement('div');
     card.className = 'event-card';
     card.innerHTML = `
-        
         <h3>${event.title}</h3>
         <p>${event.description.substring(0, 100)}${event.description.length > 100 ? '...' : ''}</p>
         <p><i class="fas fa-calendar-alt"></i> ${new Date(event.date).toLocaleString()}</p>
@@ -149,7 +138,6 @@ function showEventDetails(eventId) {
     const event = allEvents.find(e => e.id === eventId);
     if (event) {
         document.getElementById('eventTitle').textContent = event.title;
-        
         document.getElementById('eventDescription').textContent = event.description;
         document.getElementById('eventDateTime').textContent = `Date and Time: ${new Date(event.date).toLocaleString()}`;
         document.getElementById('eventLocation').textContent = `Location: ${event.location}`;
@@ -165,7 +153,6 @@ function registerForEvent(e, eventId) {
     const name = document.getElementById('attendeeName').value;
     const email = document.getElementById('attendeeEmail').value;
 
-    showLoading();
     fetch(`${API_BASE_URL}/events/${eventId}/register`, {
         method: 'POST',
         headers: {
@@ -189,7 +176,6 @@ function registerForEvent(e, eventId) {
         showNotification('Error registering for event: ' + error.message, true);
     })
     .finally(() => {
-        hideLoading();
     });
 }
 
@@ -221,7 +207,6 @@ function filterEvents() {
 searchInput.addEventListener('input', filterEvents);
 categoryFilter.addEventListener('change', filterEvents);
 
-// Add smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -231,7 +216,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add interactive hover effects
 eventsContainer.addEventListener('mouseover', (e) => {
     if (e.target.closest('.event-card')) {
         e.target.closest('.event-card').style.transform = 'scale(1.05)';
@@ -244,7 +228,6 @@ eventsContainer.addEventListener('mouseout', (e) => {
     }
 });
 
-// Add a "scroll to top" button
 const scrollToTopBtn = document.createElement('button');
 scrollToTopBtn.textContent = '↑';
 scrollToTopBtn.style.position = 'fixed';
@@ -264,8 +247,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Initial load
 showEventsBtn.click();
 
-// Periodically refresh events
-setInterval(fetchEvents, 300000); // Refresh every 5 minutes
+setInterval(fetchEvents, 300000);
